@@ -1,0 +1,11 @@
+// Schema bazei de date. Modelele (User, Food, Meal, ...) se adauga incepand cu Etapa 1.
+// Conexiunea (DATABASE_URL) este definita in prisma.config.ts.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}

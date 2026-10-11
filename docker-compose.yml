@@ -1,0 +1,23 @@
+services:
+  db:
+    # PostgreSQL 16 cu extensia pgvector preinstalata (necesara mai tarziu pentru RAG / AI Coach)
+    image: pgvector/pgvector:pg16
+    container_name: licenta-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: licenta
+      POSTGRES_PASSWORD: licenta
+      POSTGRES_DB: licenta
+    ports:
+      - '5432:5432'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U licenta -d licenta']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
